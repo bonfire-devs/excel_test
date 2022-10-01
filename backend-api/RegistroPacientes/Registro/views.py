@@ -54,6 +54,15 @@ class PacienteView(APIView):
 
             return Response(serializer.data)
 
+    def delete(self, request, *args, **kwargs):
+        if request.method == 'DELETE':
+            try:
+                paciente = Paciente.objects.get(id=request.query_params['id'])
+                paciente.delete()
+                return Response({'message: Paciente eliminado'})
+            except:
+                return Response({'message: Error al eliminar el paciente'})
+
 class Numeros_telefonicosViewSet(viewsets.ModelViewSet):
     serializer_class = Numeros_telefonicosSerializer
     def get_queryset(self):
